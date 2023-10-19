@@ -36,6 +36,10 @@ type Transaction struct {
 	CancelDescription string   `json:"cancel_description" gorm:"type:varchar(255)" valid:"-"`
 }
 
+func init() {
+	govalidator.SetFieldsRequiredByDefault(true)
+}
+
 func (t *Transaction) isValid() error {
 	_, err := govalidator.ValidateStruct(t)
 
@@ -72,7 +76,7 @@ func (t *Transaction) Cancel(description string) error {
 	return err
 }
 
-func NewTransaction(accountFrom *Account, amount float64, pixKeyTo *PixKey, description string, id string) (*Transaction, error) {
+func NewTransaction(accountFrom *Account, amount float64, pixKeyTo *PixKey, description string) (*Transaction, error) {
 	transaction := Transaction{
 		AccountFrom:   accountFrom,
 		AccountFromID: accountFrom.ID,
@@ -83,12 +87,7 @@ func NewTransaction(accountFrom *Account, amount float64, pixKeyTo *PixKey, desc
 		Description:   description,
 	}
 
-	if id == "" {
-		transaction.ID = uuid.NewV4().String()
-	} else {
-		transaction.ID = id
-	}
-
+	transaction.ID = uuid.NewV4().String()
 	transaction.CreatedAt = time.Now()
 
 	err := transaction.isValid()
@@ -96,6 +95,6 @@ func NewTransaction(accountFrom *Account, amount float64, pixKeyTo *PixKey, desc
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return &transaction, nil
 }
