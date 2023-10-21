@@ -23,7 +23,7 @@ type PixKeyRepositoryDb struct {
 */
 func (r PixKeyRepositoryDb) AddBank(bank *model.Bank) error {
 	err := r.Db.Create(bank).Error
-
+	
 	if err != nil {
 		return err
 	}
@@ -37,7 +37,7 @@ func (r PixKeyRepositoryDb) AddAccount(account *model.Account) error {
 	if err != nil {
 		return err
 	}
-
+	
 	return nil
 }
 
@@ -73,9 +73,6 @@ func (r PixKeyRepositoryDb) FindKeyByKind(key string, kind string) (*model.PixKe
 	return &pixKey, nil
 }
 
-/*
-
-*/
 func (r PixKeyRepositoryDb) FindAccount(id string) (*model.Account, error) {
 	var account model.Account
 
@@ -88,9 +85,6 @@ func (r PixKeyRepositoryDb) FindAccount(id string) (*model.Account, error) {
 	return &account, nil
 }
 
-/*
-
-*/
 func (r PixKeyRepositoryDb) FindBank(id string) (*model.Bank, error) {
 	var bank model.Bank
 
@@ -99,6 +93,6 @@ func (r PixKeyRepositoryDb) FindBank(id string) (*model.Bank, error) {
 	if bank.ID == "" {
 		return nil, fmt.Errorf("no bank found")
 	}
-
+	
 	return &bank, nil
 }
