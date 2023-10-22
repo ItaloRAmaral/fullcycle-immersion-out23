@@ -3,7 +3,7 @@ package repository
 import (
 	"fmt"
 	"github.com/ItaloRAmaral/fullcycle-immersion-out23/domain/model"
-	"gorm.io/gorm"
+	"github.com/jinzhu/gorm"
 )
 
 type TransactionRepositoryDb struct {
